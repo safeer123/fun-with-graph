@@ -5,12 +5,12 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 
-const MAX_FUNC_DESC_LENGTH_TO_DISPLAY = 100;
+const MAX_FUNC_DESC_LENGTH_TO_DISPLAY = 20;
 const DEFAULT_FUNC = `
 (r) => {
-  const y = x => r*x*(1-x);
+  const y = (x) => r * x * (1 - x);
   let y0 = 0.4;
-  for(let i=0; i<1000+((r*1000)%7); i+=1) {
+  for (let i = 0; i < 1000 + ((r * 1000) % 7); i += 1) {
     y0 = y(y0);
   }
   return y0;
