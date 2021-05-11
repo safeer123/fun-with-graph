@@ -5,7 +5,7 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 
-const MAX_FUNC_DESC_LENGTH_TO_DISPLAY = 20;
+const MAX_FUNC_DESC_LENGTH_TO_DISPLAY = 100;
 const DEFAULT_FUNC = `
 (r) => {
   const y = (x) => r * x * (1 - x);
@@ -20,14 +20,7 @@ export default function GraphInputs({ onChange }) {
   const [showInputPopover, setShowInputPopover] = React.useState(false);
 
   const [inputValidation, setInputValidation] = React.useState({
-    function: (r) => {
-      const y = (x) => r * x * (1 - x);
-      let y0 = 0.4;
-      for (let i = 0; i < 1000 + ((r * 1000) % 7); i += 1) {
-        y0 = y(y0);
-      }
-      return y0;
-    },
+    function: eval(DEFAULT_FUNC),
     startVal: 1,
     endVal: 4.2,
     step: 0.0005,
