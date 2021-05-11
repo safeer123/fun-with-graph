@@ -5,30 +5,30 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 
+import FunctionsSlides from "./FunctionsSlides";
+import functions from "./FunctionsSlides/functions";
+
 const MAX_FUNC_DESC_LENGTH_TO_DISPLAY = 100;
-const DEFAULT_FUNC = `
-(r) => {
-  const y = (x) => r * x * (1 - x);
-  let y0 = 0.4;
-  for (let i = 0; i < 1000 + ((r * 1000) % 7); i += 1) {
-    y0 = y(y0);
-  }
-  return y0;
-}
-`;
+
 export default function GraphInputs({ onChange }) {
   const [showInputPopover, setShowInputPopover] = React.useState(false);
 
   const [inputValidation, setInputValidation] = React.useState({
-    function: eval(DEFAULT_FUNC),
-    startVal: 1,
-    endVal: 4.2,
-    step: 0.0005,
-    functionDesc: DEFAULT_FUNC
+    function: eval(functions[0].function),
+    startVal: functions[0].startVal,
+    endVal: functions[0].endVal,
+    step: functions[0].step,
+    functionDesc: functions[0].function
   });
+
+  const [inputs, setInputs] = React.useState(functions[0]);
 
   const handleChangeFunc = (val) => {
     // console.log(val);
+    setInputs({
+      ...inputs,
+      function: val
+    });
     try {
       const func = eval(val);
       const inputType = typeof func;
@@ -60,6 +60,10 @@ export default function GraphInputs({ onChange }) {
   };
 
   const numberFieldChangeHandler = (inputKey) => (e) => {
+    setInputs({
+      ...inputs,
+      [inputKey]: e.target.value
+    });
     try {
       const val = eval(e.target.value);
       const inputType = typeof val;
@@ -115,6 +119,17 @@ export default function GraphInputs({ onChange }) {
     }
   };
 
+  const onSelectFunction = (f) => {
+    setInputValidation({
+      function: eval(f.function),
+      startVal: f.startVal,
+      endVal: f.endVal,
+      step: f.step,
+      functionDesc: f.function
+    });
+    setInputs(f);
+  };
+
   return (
     <>
       <div
@@ -128,8 +143,10 @@ export default function GraphInputs({ onChange }) {
         className={showInputPopover ? "inputAreaRoot" : "inputAreaRoot-closed"}
         style={{ opacity: showInputPopover ? 1 : 0 }}
       >
+        <FunctionsSlides onSelect={onSelectFunction} />
+
         <div className="inputItem">
-          <div className="inputItemTitle">Function</div>
+          <div className="inputItemTitle">Function Editor</div>
           {/* <textarea
             className="textAreaBox"
             rows={8}
@@ -149,7 +166,8 @@ export default function GraphInputs({ onChange }) {
             showPrintMargin={true}
             showGutter={true}
             highlightActiveLine={true}
-            defaultValue={inputValidation.functionDesc}
+            value={inputs.function}
+            //defaultValue={inputValidation.functionDesc}
             setOptions={{
               enableBasicAutocompletion: false,
               enableLiveAutocompletion: false,
@@ -166,7 +184,8 @@ export default function GraphInputs({ onChange }) {
             <input
               className="inputField"
               onChange={handleChangeStartVal}
-              defaultValue={inputValidation.startVal}
+              value={inputs.startVal}
+              // defaultValue={inputValidation.startVal}
             />
           </div>
           <div className="inputSubItem">
@@ -174,7 +193,8 @@ export default function GraphInputs({ onChange }) {
             <input
               className="inputField"
               onChange={handleChangeEndVal}
-              defaultValue={inputValidation.endVal}
+              value={inputs.endVal}
+              // defaultValue={inputValidation.endVal}
             />
           </div>
           <div className="inputSubItem">
@@ -182,7 +202,8 @@ export default function GraphInputs({ onChange }) {
             <input
               className="inputField"
               onChange={handleChangeStepSize}
-              defaultValue={inputValidation.step}
+              value={inputs.step}
+              // defaultValue={inputValidation.step}
             />
           </div>
         </div>

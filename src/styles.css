@@ -159,3 +159,22 @@ body {
   font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
     DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New;
 }
+
+.carousel-root {
+  width: 277px;
+  margin-right: 16px;
+}
+
+.code-slide-root {
+  width: 270px;
+  height: 270px;
+  background-color: #ccc;
+  border: 1px solid #999;
+  border-radius: 5px;
+  font-size: 18px;
+  color: rgb(100 100 100 1);
+  overflow: hidden;
+  cursor: pointer;
+  font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New;
+}
