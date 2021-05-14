@@ -94,12 +94,13 @@ body {
 
 .point-circle {
   position: absolute;
+  opacity: 0.1;
   width: 10px;
   height: 10px;
   left: -5px;
   top: -5px;
   border-radius: 5px;
-  background-color: rgba(100, 100, 100, 0.5);
+  background-color: rgba(100, 100, 100);
 }
 
 .x-min-label {

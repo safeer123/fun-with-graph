@@ -16,7 +16,7 @@ export default class extends React.Component {
       <CarouselProvider
         naturalSlideWidth={300}
         naturalSlideHeight={300}
-        totalSlides={2}
+        totalSlides={functions.length}
         className="carousel-root"
       >
         <div className="inputItemTitle">Select a function</div>

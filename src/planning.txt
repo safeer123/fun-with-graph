@@ -1,1 +1,8 @@
 Add Debounce for inputs
+
+Polar functions and graphs
+{
+  value,
+  color,
+  polar: true,
+}

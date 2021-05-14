@@ -15,10 +15,11 @@ export default function GraphInputs({ onChange }) {
 
   const [inputValidation, setInputValidation] = React.useState({
     function: eval(functions[0].function),
-    startVal: functions[0].startVal,
-    endVal: functions[0].endVal,
-    step: functions[0].step,
-    functionDesc: functions[0].function
+    startVal: eval(functions[0].startVal),
+    endVal: eval(functions[0].endVal),
+    step: eval(functions[0].step),
+    functionDesc: functions[0].function,
+    polar: functions[0].polar
   });
 
   const [inputs, setInputs] = React.useState(functions[0]);
@@ -92,10 +93,24 @@ export default function GraphInputs({ onChange }) {
   const handleChangeEndVal = numberFieldChangeHandler("endVal");
   const handleChangeStepSize = numberFieldChangeHandler("step");
 
+  const handleChangePolar = (e) => {
+    setInputs({
+      ...inputs,
+      polar: e.target.checked
+    });
+    setInputValidation({
+      ...inputValidation,
+      polar: e.target.checked
+    });
+  };
+
   const allGood = () => {
-    const invalidInputs = Object.values(inputValidation).some(
-      (v) => v === false
-    );
+    const invalidInputs = [
+      inputValidation.function,
+      inputValidation.startVal,
+      inputValidation.endVal,
+      inputValidation.step
+    ].some((v) => v === false);
     if (!invalidInputs) {
       if (inputValidation.endVal > inputValidation.startVal) {
         const xSpan = inputValidation.endVal - inputValidation.startVal;
@@ -122,10 +137,11 @@ export default function GraphInputs({ onChange }) {
   const onSelectFunction = (f) => {
     setInputValidation({
       function: eval(f.function),
-      startVal: f.startVal,
-      endVal: f.endVal,
-      step: f.step,
-      functionDesc: f.function
+      startVal: eval(f.startVal),
+      endVal: eval(f.endVal),
+      step: eval(f.step),
+      functionDesc: f.function,
+      polar: f.polar
     });
     setInputs(f);
   };
@@ -136,7 +152,7 @@ export default function GraphInputs({ onChange }) {
         className="header"
         onClick={() => setShowInputPopover(!showInputPopover)}
       >
-        {inputValidation.functionDesc}
+        {inputValidation.functionDesc.substr(0, 100)}
       </div>
 
       <div
@@ -206,16 +222,21 @@ export default function GraphInputs({ onChange }) {
               // defaultValue={inputValidation.step}
             />
           </div>
-        </div>
-
-        <div className="inputItem">
-          <div />
+          <div className="inputSubItem">
+            <input
+              type="checkbox"
+              className="checkbox-input"
+              onChange={handleChangePolar}
+              checked={inputs.polar}
+              // defaultValue={inputValidation.step}
+            />
+            <span className="checkbox-label">Polar Function</span>
+          </div>
           <div className="inputSubItem">
             <button disabled={!allGood()} className="doneButton" onClick={done}>
               DONE
             </button>
           </div>
-          <div />
         </div>
       </div>
     </>
