@@ -3,6 +3,7 @@ import React from "react";
 import GraphInputs from "./GraphInputs";
 import PlotArea from "./PlotArea";
 import "./styles.css";
+import 'antd/dist/antd.css';
 
 export default function App() {
   const [graphInputData, setGraphInputData] = React.useState(undefined);
