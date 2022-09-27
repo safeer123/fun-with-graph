@@ -1,5 +1,9 @@
 import React from "react";
 import { get } from "lodash";
+import { Button, Popover } from "antd";
+import {
+  QuestionCircleOutlined,
+} from '@ant-design/icons';
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
@@ -7,6 +11,7 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import FunctionsSlides from "./FunctionsSlides";
 import functions from "./FunctionsSlides/functions";
+import { FunctionEditorHelp } from "./helperContent";
 
 const MAX_FUNC_DESC_LENGTH_TO_DISPLAY = 100;
 
@@ -23,6 +28,10 @@ export default function GraphInputs({ onChange }) {
   });
 
   const [inputs, setInputs] = React.useState(functions[0]);
+
+  React.useEffect(() => {
+    done();
+  }, [])
 
   const handleChangeFunc = (val) => {
     // console.log(val);
@@ -150,9 +159,15 @@ export default function GraphInputs({ onChange }) {
     <>
       <div
         className="header"
-        onClick={() => setShowInputPopover(!showInputPopover)}
+        
       >
-        {inputValidation.functionDesc.substr(0, 100)}
+        <Button
+          onClick={() => setShowInputPopover(!showInputPopover)}
+          size="small"
+          type="primary"
+        >
+          Function Editor 
+        </Button>
       </div>
 
       <div
@@ -162,7 +177,12 @@ export default function GraphInputs({ onChange }) {
         <FunctionsSlides onSelect={onSelectFunction} />
 
         <div className="inputItem">
-          <div className="inputItemTitle">Function Editor</div>
+          <div className="inputItemTitle">
+            <span>Function Editor</span>
+            <Popover content={FunctionEditorHelp.content} title={FunctionEditorHelp.title}>
+              <QuestionCircleOutlined className="helper-icon-editor"/>
+            </Popover>
+            </div>
           {/* <textarea
             className="textAreaBox"
             rows={8}
@@ -222,7 +242,7 @@ export default function GraphInputs({ onChange }) {
               // defaultValue={inputValidation.step}
             />
           </div>
-          <div className="inputSubItem">
+          <div className="inputSubItem inline-items">
             <input
               type="checkbox"
               className="checkbox-input"
@@ -230,12 +250,16 @@ export default function GraphInputs({ onChange }) {
               checked={inputs.polar}
               // defaultValue={inputValidation.step}
             />
-            <span className="checkbox-label">Polar Function</span>
+            <div className="checkbox-label">Polar Function</div>
           </div>
           <div className="inputSubItem">
-            <button disabled={!allGood()} className="doneButton" onClick={done}>
-              DONE
-            </button>
+            <span>
+              <button disabled={!allGood()} className="editor-action-button" onClick={done}>
+                Render Graph
+              </button>
+              <button className="editor-action-button" onClick={() => setShowInputPopover(false)}>Close</button>
+            </span>
+
           </div>
         </div>
       </div>
