@@ -1,5 +1,7 @@
 const LOGISTIC_MAP_FUNC = `
 (r) => {
+  // Logistic Map
+  // https://en.wikipedia.org/wiki/Logistic_map
   const y = (x) => r * x * (1 - x);
   let y0 = 0.4;
   for (let i = 0; i < 1000 + ((r * 1000) % 7); i += 1) {
@@ -11,6 +13,7 @@ const LOGISTIC_MAP_FUNC = `
 
 const MULT_FUNC = `
 (x) => {
+  // Circular functions, sin and cos
   const y_circle = Math.sqrt(25 - x*x);
   return [
     { value: y_circle, color: 'blue'}, 
@@ -73,6 +76,7 @@ const SUBTRACT_DIG_PRODUCT_FUNC = `
 
 const POLAR_FLOWERS_FUNC = `
 (t) => {
+  // Polar function example 1
   return [
     {
       value: 2 + Math.sin(6*t),
@@ -88,6 +92,7 @@ const POLAR_FLOWERS_FUNC = `
 
 const POLAR_FLOWERS_FUNC_2 = `
 (t) => {
+  // Polar function example 2
   return [
     {
       value: Math.sin(3/4*t),

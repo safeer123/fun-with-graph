@@ -19,10 +19,10 @@ export default class extends React.Component {
         totalSlides={functions.length}
         className="carousel-root"
       >
-        <div className="inputItemTitle">Select a function</div>
+        <div className="inputItemTitle">Click below to copy this sample function</div>
         <Slider>
           {functions.map((f, i) => (
-            <Slide index={i}>
+            <Slide index={i} key={f.function} title="Click here to copy">
               <div
                 className="code-slide-root"
                 onClick={() => this.props.onSelect(f)}
